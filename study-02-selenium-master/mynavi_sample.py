@@ -76,6 +76,7 @@ def main():
                 print("全件取得")
                 list_df.to_csv("mynavi.csv")
                 driver.quit()    
+                break
         except Exception as e:
             traceback.print_exc()
             logging.error(e)
