@@ -67,15 +67,19 @@ def main():
                 logging.error(e)
                 continue
         try:
-            next_btn = driver.find_element_by_class_name("iconFont--arrowLeft")
-            next_btn.click()
+            next_page = driver.find_elements_by_class_name("iconFont--arrowLeft")
+            if len(next_page) >= 1:
+                next_page_link = next_page[0].get_attribute("href")
+                driver.get(next_page_link)
+            else:
+                logging.info("全部で" + str(count) + "件")
+                print("全件取得")
+                list_df.to_csv("mynavi.csv")
+                driver.quit()    
         except Exception as e:
             traceback.print_exc()
-            logging.info(e)
+            logging.error(e)
             driver.quit()
-            logging.info("全部で" + str(count) + "件")
-            print("全件取得")
-            list_df.to_csv("mynavi.csv")
             break
 
 ### 直接起動された場合はmain()を起動(モジュールとして呼び出された場合は起動しないようにするため)
